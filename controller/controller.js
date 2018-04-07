@@ -16,6 +16,16 @@ router.get('/', function (req, res) {
     res.redirect('/articles');
 });
 
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+
+// Set mongoose to leverage built in JavaScript ES6 Promises
+// Connect to the Mongo DB
+mongoose.Promise = Promise;
+mongoose.connect(MONGODB_URI, {
+    useMongoClient: true
+});
+
+
 // A GET request to scrape The New York Times website
 router.get('/scrape', function (req, res) {
     // First, we grab the body of the html with request
